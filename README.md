@@ -2,6 +2,8 @@
 
 此 repository 是 QRACON 組織的 GitHub Pages 根網址：<https://qracon-tw.github.io/>。
 
-部署 workflow 會查詢 `QRACON-tw` 組織的公開 repositories，選出名稱符合四位數 `20XX` 的最高年度 repository，並從該 repository 的預設分支抓取網站原始碼，建置後發布到 Pages。每日 16:17（臺灣時間）自動更新，也可在 GitHub Actions 手動執行 `Deploy latest annual website to GitHub Pages`。如果找不到符合條件且有預設分支的公開年度 repository，workflow 會停止並在執行紀錄說明原因。
+首頁列出目前年度 `2026`；點選後會經由 `/2026/` 前往 QRACON 2026 官網：<https://2026-qracon.entangletech.tw/>。
 
-建置時會將 Astro 的 `site` 暫時覆寫為根網址，讓 canonical URL 與 sitemap 指向 GitHub Pages；不會修改年度官網 repository。發布到此根網址的頁面路徑是 `/`，網址不加年度前綴。
+GitHub Pages workflow 會在入口 repository 的 `main` 更新、收到年度官網的 `repository_dispatch`，或手動執行時部署 `site/`。目前 2026 repository 的 `main` 有新 commit 時，會透過 `.github/workflows/notify-website-deploy.yml` 發送 `annual-site-updated` 事件。
+
+要啟用跨 repository 事件，請在 `QRACON-tw/2026` 設定名為 `PAGES_DISPATCH_TOKEN` 的 Actions repository secret。此 fine-grained personal access token 僅需授權 `QRACON-tw/qracon-tw.github.io`，並開啟 repository `Contents: write` 權限。若未設定或 token 權限不足，2026 repo 的通知 workflow 會明確失敗；可在入口 repo 手動執行部署 workflow。
