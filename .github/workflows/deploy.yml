@@ -3,8 +3,6 @@ name: Deploy QRACON annual directory to GitHub Pages
 on:
   push:
     branches: [main]
-  repository_dispatch:
-    types: [annual-site-updated]
   workflow_dispatch:
 
 permissions:
