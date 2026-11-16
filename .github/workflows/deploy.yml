@@ -26,10 +26,13 @@ jobs:
     steps:
       - name: Find the newest public annual Pages repository
         id: latest
+        env:
+          GH_TOKEN: ${{ github.token }}
         shell: bash
         run: |
           python3 - <<'PY' >> "$GITHUB_OUTPUT"
           import json
+          import os
           import urllib.request
 
           years = []
@@ -42,6 +45,7 @@ jobs:
                   url,
                   headers={
                       "Accept": "application/vnd.github+json",
+                      "Authorization": f"Bearer {os.environ['GH_TOKEN']}",
                       "User-Agent": "QRACON-Pages-Deploy",
                       "X-GitHub-Api-Version": "2022-11-28",
                   },
